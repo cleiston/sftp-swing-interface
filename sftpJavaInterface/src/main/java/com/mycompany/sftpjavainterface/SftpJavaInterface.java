@@ -5,6 +5,10 @@
 
 package com.mycompany.sftpjavainterface;
 
+import com.jcraft.jsch.JSchException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author almadb
@@ -12,6 +16,14 @@ package com.mycompany.sftpjavainterface;
 public class SftpJavaInterface {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        SftpClient sftpClient = new SftpClient("192.168.118.128", 2022, "teste");
+        try {
+            sftpClient.authPassword("123");
+            sftpClient.listFiles("/");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(SftpJavaInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
