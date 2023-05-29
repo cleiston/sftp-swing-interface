@@ -4,10 +4,8 @@
  */
 
 package com.mycompany.sftpjavainterface;
-
-import com.jcraft.jsch.JSchException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFrame;
+import screens.LoginFrame;
 
 /**
  *
@@ -16,6 +14,7 @@ import java.util.logging.Logger;
 public class SftpJavaInterface {
 
     public static void main(String[] args) {
+        /*
         SftpClient sftpClient = new SftpClient("192.168.118.128", 2022, "teste");
         try {
             sftpClient.authPassword("123");
@@ -24,6 +23,12 @@ public class SftpJavaInterface {
         } catch (Exception ex) {
             Logger.getLogger(SftpJavaInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
+        LoginFrame loginFrame = new LoginFrame();
+        loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        loginFrame.setVisible(true);
+        
         
     }
+    
 }
