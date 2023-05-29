@@ -1,6 +1,8 @@
 package com.mycompany.sftpjavainterface;
 
 import com.jcraft.jsch.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -84,7 +86,7 @@ public final class SftpClient {
         }
         System.out.printf("Listing [%s]...%n", remoteDir);
         channel.cd(remoteDir);
-        Vector<ChannelSftp.LsEntry> files = channel.ls(".");
+        Vector<ChannelSftp.LsEntry> files = channel.ls("/");
         for (ChannelSftp.LsEntry file : files) {
             var name        = file.getFilename();
             var attrs       = file.getAttrs();
@@ -95,6 +97,29 @@ public final class SftpClient {
             }
             System.out.printf("[%s] %s(%s)%n", permissions, name, size);
         }
+    }
+    @SuppressWarnings("unchecked")
+    public List<FileInfo> listFilesInArrayList(String remoteDir) throws SftpException, JSchException {
+        if (channel == null) {
+            throw new IllegalArgumentException("Connection is not available");
+        }
+        List<FileInfo> lfi = new ArrayList<>();
+        
+        channel.cd(remoteDir);
+        Vector<ChannelSftp.LsEntry> files = channel.ls("/");
+        for (ChannelSftp.LsEntry file : files) {
+            var name        = file.getFilename();
+            var attrs       = file.getAttrs();
+            var permissions = attrs.getPermissionsString();
+            var size        = attrs.getSize() + "";
+            if (attrs.isDir()) {
+                size = "PRE";
+            }
+            if(name.equals(".")) continue;
+            FileInfo ui = new FileInfo(name, permissions, size);
+            lfi.add(ui);
+        }
+        return lfi;
     }
 
     /**

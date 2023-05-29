@@ -178,7 +178,7 @@ public class LoginFrame extends javax.swing.JFrame {
             //sftpClient.listFiles("/");
             //JOptionPane.showMessageDialog(rootPane, "User authenticated");
             this.setVisible(false);
-            mainFrame = new MainFrame();
+            mainFrame = new MainFrame(sftpClient);
             mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mainFrame.setVisible(true);
             mainFrame.setUserInfo(new UserInfo(username));

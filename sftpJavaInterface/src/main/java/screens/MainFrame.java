@@ -4,7 +4,16 @@
  */
 package screens;
 
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
+import com.mycompany.sftpjavainterface.FileInfo;
+import com.mycompany.sftpjavainterface.SftpClient;
 import com.mycompany.sftpjavainterface.UserInfo;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,13 +26,23 @@ public class MainFrame extends javax.swing.JFrame {
      */
     
     private UserInfo userInfo;
+    private SftpClient sftpClient;
     
     public void setUserInfo(UserInfo userInfo){
         this.userInfo = userInfo;
+        this.wecomeLabel.setText(this.wecomeLabel.getText() + ", " + userInfo.getUsername() + "!");
+        
     }
     
     public MainFrame() {
         initComponents();
+        iconLabel.setIcon(new javax.swing.ImageIcon("src/main/java/images/logoLogin.png"));
+    }
+    
+    public MainFrame(SftpClient sftpClient){
+        this();
+        this.sftpClient = sftpClient;
+        fillTable();
     }
 
     /**
@@ -35,17 +54,87 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        wecomeLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        filesListTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        iconLabel = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        wecomeLabel.setText("Welcome ");
+
+        filesListTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(filesListTable);
+
+        jLabel1.setText("Here is a list of files that you have uploaded:");
+
+        jButton1.setText("Upload new file");
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("Upload new file");
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(wecomeLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(wecomeLabel)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -87,5 +176,42 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable filesListTable;
+    private javax.swing.JLabel iconLabel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel wecomeLabel;
     // End of variables declaration//GEN-END:variables
+
+    public void fillTable(){
+        try {
+            String col[] = {"Filename","Permissions", "Size"};
+            this.sftpClient.listFiles("/");
+            
+            DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+            
+            if(sftpClient == null) return;
+            
+            List<FileInfo> fileInfoRecords = sftpClient.listFilesInArrayList("/");
+            for(FileInfo fileInfo: fileInfoRecords){
+                Object[] obj = {
+                    fileInfo.getName(),
+                    fileInfo.getPermissions(),
+                    fileInfo.getSize()
+                };
+                tableModel.addRow(obj);
+            }
+            
+            filesListTable.setModel(tableModel);
+            filesListTable.setAutoCreateRowSorter(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Error at loading uploaded files!" + ex.getMessage());
+        } 
+    }
+
 }
