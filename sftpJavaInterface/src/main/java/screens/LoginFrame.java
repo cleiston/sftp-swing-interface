@@ -5,6 +5,7 @@
 package screens;
 
 import com.mycompany.sftpjavainterface.SftpClient;
+import com.mycompany.sftpjavainterface.UserInfo;
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -180,6 +181,7 @@ public class LoginFrame extends javax.swing.JFrame {
             mainFrame = new MainFrame();
             mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mainFrame.setVisible(true);
+            mainFrame.setUserInfo(new UserInfo(username));
             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "Error performing login.\n" + ex.getMessage(), "Login error", HEIGHT);

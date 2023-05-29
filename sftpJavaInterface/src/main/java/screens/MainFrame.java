@@ -4,6 +4,8 @@
  */
 package screens;
 
+import com.mycompany.sftpjavainterface.UserInfo;
+
 /**
  *
  * @author almadb
@@ -13,6 +15,13 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    
+    private UserInfo userInfo;
+    
+    public void setUserInfo(UserInfo userInfo){
+        this.userInfo = userInfo;
+    }
+    
     public MainFrame() {
         initComponents();
     }
