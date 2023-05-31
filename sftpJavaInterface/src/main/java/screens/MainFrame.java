@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -39,6 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         iconLabel.setIcon(new javax.swing.ImageIcon("src/main/java/images/logoLogin.png"));
+        filesListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     public MainFrame(SftpClient sftpClient){

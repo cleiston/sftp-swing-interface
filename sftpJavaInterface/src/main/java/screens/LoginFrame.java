@@ -21,11 +21,14 @@ public class LoginFrame extends javax.swing.JFrame {
      */
     public LoginFrame() {
         initComponents();
+        ssf = new SetServerFrame();
         jLabel3.setIcon(new javax.swing.ImageIcon("src/main/java/images/logoLogin.png"));
+        setServerBtn.setIcon(new javax.swing.ImageIcon("src/main/java/images/set.png"));
     }
     
     private SftpClient sftpClient;
     private MainFrame mainFrame;
+    private SetServerFrame ssf;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,8 +46,10 @@ public class LoginFrame extends javax.swing.JFrame {
         passwordField = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        setServerBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
 
         jButton1.setText("Access SFTP");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +97,12 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
+        setServerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setServerBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,7 +113,9 @@ public class LoginFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(setServerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,6 +127,10 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addComponent(jButton1)
                 .addContainerGap(46, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(setServerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -122,6 +139,12 @@ public class LoginFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.authenticate();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void setServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setServerBtnActionPerformed
+
+        ssf.setVisible(true);
+        ssf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_setServerBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,14 +188,22 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton setServerBtn;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 
     public void authenticate(){
         String username = usernameField.getText();
         String password = passwordField.getText();
+        String server = "192.168.118.128";
+        int port = 2022;
         
-        sftpClient = new SftpClient("10.52.56.213", 2022, username);
+        if(ssf.hasNewServerAddress()){
+            server = ssf.getServerAddress();
+            port = ssf.getServerPort();         
+        }
+        
+        sftpClient = new SftpClient(server, port, username);
         try {
             sftpClient.authPassword(password);
             //sftpClient.listFiles("/");
