@@ -64,6 +64,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         iconLabel = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -71,7 +72,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        wecomeLabel.setText("Welcome ");
+        wecomeLabel.setText("Welcome");
 
         filesListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,6 +93,13 @@ public class MainFrame extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Remove selected file");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -120,7 +128,10 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -144,7 +155,9 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(80, 80, 80)
                         .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -160,13 +173,32 @@ public class MainFrame extends javax.swing.JFrame {
                 return;
             }
             String fileName = chooser.getSelectedFile().getAbsolutePath();
-            
+            try {
+                sftpClient.uploadFile(fileName, "/");
+                JOptionPane.showMessageDialog(rootPane, "File uploaded");
+                this.fillTable(); // update table
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error at uploading file!\n" + ex.getMessage());
+            } 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jButton1ActionPerformed(evt);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int row = filesListTable.getSelectedRow();
+        int col = 0;
+        String selectedFile = filesListTable.getValueAt(row, col).toString();
+        
+        try {
+            sftpClient.delete(selectedFile);
+            this.fillTable(); // update files list
+        } catch (SftpException ex) {
+            JOptionPane.showMessageDialog(null, "Error at removing file: " + selectedFile + "\n" + ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,6 +239,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTable filesListTable;
     private javax.swing.JLabel iconLabel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
