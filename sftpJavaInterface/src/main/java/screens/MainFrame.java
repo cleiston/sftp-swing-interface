@@ -254,7 +254,12 @@ public class MainFrame extends javax.swing.JFrame {
             String col[] = {"Filename","Permissions", "Size"};
             this.sftpClient.listFiles("/");
             
-            DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+            DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+                @Override
+                 public Class getColumnClass(int c) {
+                     return getValueAt(0, c).getClass();
+                 }
+            };
             
             if(sftpClient == null) return;
             
@@ -263,7 +268,7 @@ public class MainFrame extends javax.swing.JFrame {
                 Object[] obj = {
                     fileInfo.getName(),
                     fileInfo.getPermissions(),
-                    fileInfo.getSize()
+                    Integer.parseInt(fileInfo.getSize())
                 };
                 tableModel.addRow(obj);
             }
