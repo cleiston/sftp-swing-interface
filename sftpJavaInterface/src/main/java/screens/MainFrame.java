@@ -41,6 +41,8 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         iconLabel.setIcon(new javax.swing.ImageIcon("src/main/java/images/logoLogin.png"));
         filesListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        filesListTable.setDefaultEditor(Object.class, null);
+
     }
     
     public MainFrame(SftpClient sftpClient){
