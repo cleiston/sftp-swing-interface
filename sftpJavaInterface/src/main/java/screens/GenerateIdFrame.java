@@ -159,6 +159,7 @@ public class GenerateIdFrame extends javax.swing.JFrame {
         String address_state = stateField.getText();
         patientInfo = new PatientInfo(fullName, birth_day, birth_month, birth_year, address_city, address_state);
         JOptionPane.showMessageDialog(rootPane, patientInfo.generateID(), "ID Generated", JOptionPane.INFORMATION_MESSAGE);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public boolean isIdCreated(){
