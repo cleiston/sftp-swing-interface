@@ -195,7 +195,7 @@ public class LoginFrame extends javax.swing.JFrame {
     public void authenticate(){
         String username = usernameField.getText();
         String password = passwordField.getText();
-        String server = "192.168.118.128";
+        String server = "10.52.53.40";
         int port = 2022;
         
         if(ssf.hasNewServerAddress()){
