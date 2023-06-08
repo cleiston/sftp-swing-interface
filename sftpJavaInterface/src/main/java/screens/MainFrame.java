@@ -205,21 +205,26 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        int status = chooser.showOpenDialog(null);
-        if (status == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            if (file == null) {
-                return;
+        if(gif == null){
+            JOptionPane.showMessageDialog(rootPane, "Generate a new ID before uploading new files", "No ID found", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            JFileChooser chooser = new JFileChooser();
+            int status = chooser.showOpenDialog(null);
+            if (status == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                if (file == null) {
+                    return;
+                }
+                String fileName = chooser.getSelectedFile().getAbsolutePath();
+                try {
+                    sftpClient.uploadFile(fileName, "/");
+                    JOptionPane.showMessageDialog(rootPane, "File uploaded");
+                    this.fillTable(); // update table
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error at uploading file!\n" + ex.getMessage());
+                } 
             }
-            String fileName = chooser.getSelectedFile().getAbsolutePath();
-            try {
-                sftpClient.uploadFile(fileName, "/");
-                JOptionPane.showMessageDialog(rootPane, "File uploaded");
-                this.fillTable(); // update table
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error at uploading file!\n" + ex.getMessage());
-            } 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
