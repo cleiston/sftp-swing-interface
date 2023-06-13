@@ -5,10 +5,16 @@
 package screens;
 
 import com.mycompany.sftpjavainterface.FileInfo;
+import com.mycompany.sftpjavainterface.SftpClient;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -27,8 +33,18 @@ public class AddFilesFrame extends javax.swing.JFrame {
         initComponents();
         filesList = new ArrayList<String>();
     }
+    
+    private static Object lock = new Object();
+    
+    public AddFilesFrame(String patientId, SftpClient sftp){
+        this();
+        this.sftp = sftp;
+        this.idTextField.setText(patientId);       
+    }
 
     private List<String> filesList;
+    private SftpClient sftp;
+    private UploadFrame uf;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +62,7 @@ public class AddFilesFrame extends javax.swing.JFrame {
         idLabel = new javax.swing.JLabel();
         idTextField = new javax.swing.JTextField();
         uploadButton = new javax.swing.JButton();
+        progressLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,6 +95,11 @@ public class AddFilesFrame extends javax.swing.JFrame {
         idTextField.setEditable(false);
 
         uploadButton.setText("Start uploading files");
+        uploadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uploadButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,24 +110,33 @@ public class AddFilesFrame extends javax.swing.JFrame {
                     .addComponent(idLabel)
                     .addComponent(idTextField)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(uploadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(uploadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(progressLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(addButton)
-                .addGap(18, 18, 18)
-                .addComponent(removeButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(addButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(removeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(progressLabel))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 20, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(idLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -134,7 +165,7 @@ public class AddFilesFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    int x;
+
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         JFileChooser chooser = new JFileChooser();
         FileFilter filter = new FileNameExtensionFilter("DICOM file", new String[] {"dcm", "dicom"});
@@ -160,6 +191,74 @@ public class AddFilesFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeButtonActionPerformed
 
+    @SuppressWarnings("empty-statement")
+    private void uploadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadButtonActionPerformed
+      
+        if(!filesList.isEmpty()){  
+            uf = new UploadFrame();
+            uf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            uf.setVisible(true); // user has to agree to the terms
+                       
+            // Thread to wait for the user's accordance with the agreement
+            
+            Thread t = new Thread() {
+                public void run() {
+                    synchronized(lock) {
+                        while (uf.isVisible())
+                            try {
+                                lock.wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        System.out.println("Working now");
+                    }
+                }
+            };
+            
+            t.start();
+
+            uf.addWindowListener(new WindowAdapter() {
+
+                @Override
+                public void windowClosing(WindowEvent arg0) {
+                    synchronized (lock) {
+                        uf.setVisible(false);
+                        lock.notify();
+                    }
+                }
+
+            });
+
+            try {
+                t.join(); // wait for previous thread to finish
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AddFilesFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            
+            // String msg = uf.userAgreesWithTerms() ? "Starting upload. Please wait for upload to complete." : "You did not accept the terms.";
+            if(uf.userAgreesWithTerms()){
+                for(String fileName : filesList){
+                    try {
+                        sftp.uploadFile(fileName, "/");
+                        ((DefaultTableModel)filesListTable.getModel()).removeRow(0);
+                        Thread.sleep(2000);
+                    } catch (Exception ex) {
+                        uf.setVisible(false);
+                        JOptionPane.showMessageDialog(null, "Error at uploading file!\n" + ex.getMessage());
+                    } 
+                }
+                filesList.clear();
+                uf.setVisible(false); // close upload dialog
+                JOptionPane.showMessageDialog(null, "Upload finished!\n" );
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed with the upload.\n" );
+            }
+        }
+    }//GEN-LAST:event_uploadButtonActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -202,6 +301,7 @@ public class AddFilesFrame extends javax.swing.JFrame {
     private javax.swing.JTextField idTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel progressLabel;
     private javax.swing.JButton removeButton;
     private javax.swing.JButton uploadButton;
     // End of variables declaration//GEN-END:variables

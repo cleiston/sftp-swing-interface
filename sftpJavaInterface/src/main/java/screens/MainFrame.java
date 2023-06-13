@@ -207,8 +207,9 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(gif == null){
             JOptionPane.showMessageDialog(rootPane, "Generate a new ID before uploading new files", "No ID found", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        else {
+        if(JOptionPane.showConfirmDialog(null, "By proceeding with the upload, you confirm that you agree with the terms of use.") == JOptionPane.YES_OPTION){
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showOpenDialog(null);
             if (status == JFileChooser.APPROVE_OPTION) {

@@ -4,9 +4,11 @@
  */
 
 package com.mycompany.sftpjavainterface;
+import com.jcraft.jsch.JSchException;
 import javax.swing.JFrame;
 import screens.AddFilesFrame;
 import screens.LoginFrame;
+import screens.UploadFrame;
 
 /**
  *
@@ -14,7 +16,7 @@ import screens.LoginFrame;
  */
 public class SftpJavaInterface {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JSchException {
         // testing code ///////////////
         /*
         SftpClient sftpClient = new SftpClient("192.168.118.128", 2022, "teste");
@@ -31,20 +33,24 @@ public class SftpJavaInterface {
         
         
         // testing code ///////////////
-        AddFilesFrame aff = new AddFilesFrame();
+        
+        /*
+        SftpClient sftp = new SftpClient("10.52.53.40", 2022, "user1");
+        sftp.authPassword("123456");
+        AddFilesFrame aff = new AddFilesFrame("4345sjal32lkwfd", sftp);
         aff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        aff.setVisible(true);
+        aff.setVisible(true); */
         // testing code ///////////////
         
         
         
         
         // default code ////////////////////////////
-        /*
+        
         LoginFrame loginFrame = new LoginFrame();
         loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         loginFrame.setVisible(true);
-        */
+        
         // working code ////////////////////////////
         
         
