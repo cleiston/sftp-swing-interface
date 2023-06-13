@@ -75,6 +75,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,6 +142,14 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem3.setText("Update files list");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("About");
@@ -184,7 +193,6 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(wecomeLabel)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
@@ -210,6 +218,10 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         if(JOptionPane.showConfirmDialog(null, "By proceeding with the upload, you confirm that you agree with the terms of use.") == JOptionPane.YES_OPTION){
+            AddFilesFrame aff = new AddFilesFrame("4345sjal32lkwfd", sftpClient);
+            aff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            aff.setVisible(true);
+            /*
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showOpenDialog(null);
             if (status == JFileChooser.APPROVE_OPTION) {
@@ -226,6 +238,7 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Error at uploading file!\n" + ex.getMessage());
                 } 
             }
+            */
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -259,6 +272,10 @@ public class MainFrame extends javax.swing.JFrame {
             idField.setText(gif.getPatientId());
         }
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        fillTable();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,6 +325,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel wecomeLabel;
     // End of variables declaration//GEN-END:variables

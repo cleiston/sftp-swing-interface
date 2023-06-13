@@ -34,8 +34,6 @@ public class AddFilesFrame extends javax.swing.JFrame {
         filesList = new ArrayList<String>();
     }
     
-    private static Object lock = new Object();
-    
     public AddFilesFrame(String patientId, SftpClient sftp){
         this();
         this.sftp = sftp;
@@ -194,67 +192,22 @@ public class AddFilesFrame extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     private void uploadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadButtonActionPerformed
       
-        if(!filesList.isEmpty()){  
-            uf = new UploadFrame();
-            uf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            uf.setVisible(true); // user has to agree to the terms
-                       
-            // Thread to wait for the user's accordance with the agreement
+        if(!filesList.isEmpty()
+            && JOptionPane.showConfirmDialog(null, "The selected files are going to be uploaded, and we'll let you know when it's finished. Please wait!") == JOptionPane.YES_OPTION){  
             
-            Thread t = new Thread() {
-                public void run() {
-                    synchronized(lock) {
-                        while (uf.isVisible())
-                            try {
-                                lock.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        System.out.println("Working now");
-                    }
-                }
-            };
+            while(!filesList.isEmpty()){
+                try {
+                    sftp.uploadFile(filesList.remove(0), "/");
+                    //((DefaultTableModel)filesListTable.getModel()).removeRow(0);
+                    fillTable();
+                    Thread.sleep(2000);
+                } catch (Exception ex) {
+                    uf.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "Error at uploading file!\n" + ex.getMessage());
+                } 
+            }
             
-            t.start();
-
-            uf.addWindowListener(new WindowAdapter() {
-
-                @Override
-                public void windowClosing(WindowEvent arg0) {
-                    synchronized (lock) {
-                        uf.setVisible(false);
-                        lock.notify();
-                    }
-                }
-
-            });
-
-            try {
-                t.join(); // wait for previous thread to finish
-            } catch (InterruptedException ex) {
-                Logger.getLogger(AddFilesFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                
-            
-            // String msg = uf.userAgreesWithTerms() ? "Starting upload. Please wait for upload to complete." : "You did not accept the terms.";
-            if(uf.userAgreesWithTerms()){
-                for(String fileName : filesList){
-                    try {
-                        sftp.uploadFile(fileName, "/");
-                        ((DefaultTableModel)filesListTable.getModel()).removeRow(0);
-                        Thread.sleep(2000);
-                    } catch (Exception ex) {
-                        uf.setVisible(false);
-                        JOptionPane.showMessageDialog(null, "Error at uploading file!\n" + ex.getMessage());
-                    } 
-                }
-                filesList.clear();
-                uf.setVisible(false); // close upload dialog
-                JOptionPane.showMessageDialog(null, "Upload finished!\n" );
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed with the upload.\n" );
-            }
+            JOptionPane.showMessageDialog(null, "Upload finished!\n" );
         }
     }//GEN-LAST:event_uploadButtonActionPerformed
 
