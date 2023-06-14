@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package screens;
+package com.almadb.screens;
 
 import javax.swing.JFrame;
 
@@ -17,7 +17,7 @@ public class AboutFrame extends javax.swing.JFrame {
      */
     public AboutFrame() {
         initComponents();
-        logoLabel.setIcon(new javax.swing.ImageIcon("src/main/java/images/logoLogin.png"));
+        logoLabel.setIcon(new javax.swing.ImageIcon("src/main/java/com/almadb/images/logoLogin.png"));
     }
     
     private boolean userAgrees;

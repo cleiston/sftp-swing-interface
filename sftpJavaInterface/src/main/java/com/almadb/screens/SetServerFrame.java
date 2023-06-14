@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package screens;
+package com.almadb.screens;
 
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;

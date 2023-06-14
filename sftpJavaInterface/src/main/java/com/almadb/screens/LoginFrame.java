@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package screens;
+package com.almadb.screens;
 
-import com.mycompany.sftpjavainterface.SftpClient;
-import com.mycompany.sftpjavainterface.UserInfo;
+import com.almadb.sftpjavainterface.SftpClient;
+import com.almadb.sftpjavainterface.UserInfo;
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,7 +22,7 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
         ssf = new SetServerFrame();
-        jLabel3.setIcon(new javax.swing.ImageIcon("src/main/java/images/logoLogin.png"));
+        jLabel3.setIcon(new javax.swing.ImageIcon("src/main/java/com/almadb/images/logoLogin.png"));
     }
     
     private SftpClient sftpClient;

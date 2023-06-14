@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package screens;
+package com.almadb.screens;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
-import com.mycompany.sftpjavainterface.FileInfo;
-import com.mycompany.sftpjavainterface.SftpClient;
-import com.mycompany.sftpjavainterface.UserInfo;
+import com.almadb.sftpjavainterface.FileInfo;
+import com.almadb.sftpjavainterface.SftpClient;
+import com.almadb.sftpjavainterface.UserInfo;
 import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,7 +41,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     public MainFrame() {
         initComponents();
-        iconLabel.setIcon(new javax.swing.ImageIcon("src/main/java/images/logoLogin.png"));
+        iconLabel.setIcon(new javax.swing.ImageIcon("src/main/java/com/almadb/images/logoLogin.png"));
         filesListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         filesListTable.setDefaultEditor(Object.class, null);
 

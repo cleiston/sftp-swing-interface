@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package screens;
+package com.almadb.screens;
 
-import com.mycompany.sftpjavainterface.FileInfo;
-import com.mycompany.sftpjavainterface.SftpClient;
+import com.almadb.sftpjavainterface.FileInfo;
+import com.almadb.sftpjavainterface.SftpClient;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;

@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package screens;
-import com.mycompany.sftpjavainterface.PatientInfo;
+package com.almadb.screens;
+import com.almadb.sftpjavainterface.PatientInfo;
 import javax.swing.JOptionPane;
 
 /**

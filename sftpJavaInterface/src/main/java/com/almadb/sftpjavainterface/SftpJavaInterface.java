@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
  */
 
-package com.mycompany.sftpjavainterface;
+package com.almadb.sftpjavainterface;
 import com.jcraft.jsch.JSchException;
 import javax.swing.JFrame;
-import screens.AddFilesFrame;
-import screens.LoginFrame;
-import screens.AboutFrame;
+import com.almadb.screens.AddFilesFrame;
+import com.almadb.screens.LoginFrame;
+import com.almadb.screens.AboutFrame;
 
 /**
  *

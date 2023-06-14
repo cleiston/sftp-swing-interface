@@ -1,4 +1,4 @@
-package com.mycompany.sftpjavainterface;
+package com.almadb.sftpjavainterface;
 
 import com.jcraft.jsch.*;
 import java.util.ArrayList;
