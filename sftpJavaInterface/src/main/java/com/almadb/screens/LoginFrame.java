@@ -125,6 +125,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(usernameField.getText().trim().equalsIgnoreCase("#set*")){
             ssf.setVisible(true);
+            ssf.setLocationRelativeTo(null);
             ssf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
         else
@@ -194,6 +195,7 @@ public class LoginFrame extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(rootPane, "User authenticated");
             this.setVisible(false);
             mainFrame = new MainFrame(sftpClient);
+            mainFrame.setLocationRelativeTo(null);
             mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mainFrame.setVisible(true);
             mainFrame.setUserInfo(new UserInfo(username));

@@ -19,8 +19,9 @@ public class SftpJavaInterface {
     public static void main(String[] args) throws JSchException {
         
         LoginFrame loginFrame = new LoginFrame();
+        loginFrame.setLocationRelativeTo(null);
         loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        loginFrame.setVisible(true);      
+        loginFrame.setVisible(true);    
         
     }
     

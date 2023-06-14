@@ -233,7 +233,8 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         if(JOptionPane.showConfirmDialog(null, "By proceeding with the upload, you confirm that you agree with the terms of use.") == JOptionPane.YES_OPTION){
-            AddFilesFrame aff = new AddFilesFrame("4345sjal32lkwfd", sftpClient);
+            AddFilesFrame aff = new AddFilesFrame(gif.getPatientId(), sftpClient);
+            aff.setLocationRelativeTo(null);
             aff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             aff.setVisible(true);
             /*
@@ -277,6 +278,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         if(gif == null){
             gif = new GenerateIdFrame();
+            gif.setLocationRelativeTo(null);
             gif.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         }
         gif.setVisible(true);
@@ -295,6 +297,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         AboutFrame about = new AboutFrame();
         about.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        about.setLocationRelativeTo(null);
         about.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
