@@ -17,44 +17,10 @@ import com.almadb.screens.AboutFrame;
 public class SftpJavaInterface {
 
     public static void main(String[] args) throws JSchException {
-        // testing code ///////////////
-        /*
-        SftpClient sftpClient = new SftpClient("192.168.118.128", 2022, "teste");
-        try {
-            sftpClient.authPassword("123");
-            sftpClient.listFiles("/");
-            
-        } catch (Exception ex) {
-            Logger.getLogger(SftpJavaInterface.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-        // testing code ///////////////
-        
-        
-        
-        // testing code ///////////////
-        
-        /*
-        SftpClient sftp = new SftpClient("10.52.53.40", 2022, "user1");
-        sftp.authPassword("123456");
-        AddFilesFrame aff = new AddFilesFrame("4345sjal32lkwfd", sftp);
-        aff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        aff.setVisible(true); */
-        // testing code ///////////////
-        
-        
-        
-        
-        // default code ////////////////////////////
         
         LoginFrame loginFrame = new LoginFrame();
         loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        loginFrame.setVisible(true);
-        
-        // working code ////////////////////////////
-        
-        
-        
+        loginFrame.setVisible(true);      
         
     }
     
