@@ -8,7 +8,7 @@ import com.jcraft.jsch.JSchException;
 import javax.swing.JFrame;
 import screens.AddFilesFrame;
 import screens.LoginFrame;
-import screens.UploadFrame;
+import screens.AboutFrame;
 
 /**
  *

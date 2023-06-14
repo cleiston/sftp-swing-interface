@@ -42,7 +42,7 @@ public class AddFilesFrame extends javax.swing.JFrame {
 
     private List<String> filesList;
     private SftpClient sftp;
-    private UploadFrame uf;
+    private AboutFrame uf;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
