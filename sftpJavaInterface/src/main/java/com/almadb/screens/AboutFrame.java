@@ -4,8 +4,6 @@
  */
 package com.almadb.screens;
 
-import javax.swing.JFrame;
-
 /**
  *
  * @author almadb

@@ -5,8 +5,7 @@
 package com.almadb.screens;
 
 import com.almadb.sftpjavainterface.SftpClient;
-import com.almadb.sftpjavainterface.UserInfo;
-import java.util.Arrays;
+import com.almadb.models.UserInfo;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 

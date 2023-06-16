@@ -6,9 +6,7 @@
 package com.almadb.sftpjavainterface;
 import com.jcraft.jsch.JSchException;
 import javax.swing.JFrame;
-import com.almadb.screens.AddFilesFrame;
 import com.almadb.screens.LoginFrame;
-import com.almadb.screens.AboutFrame;
 
 /**
  *

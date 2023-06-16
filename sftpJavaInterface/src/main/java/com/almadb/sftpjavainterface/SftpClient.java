@@ -1,5 +1,6 @@
 package com.almadb.sftpjavainterface;
 
+import com.almadb.models.FileInfo;
 import com.jcraft.jsch.*;
 import java.util.ArrayList;
 import java.util.List;

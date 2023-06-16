@@ -4,16 +4,11 @@
  */
 package com.almadb.screens;
 
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
-import com.almadb.sftpjavainterface.FileInfo;
+import com.almadb.models.FileInfo;
 import com.almadb.sftpjavainterface.SftpClient;
-import com.almadb.sftpjavainterface.UserInfo;
-import java.io.File;
+import com.almadb.models.UserInfo;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;

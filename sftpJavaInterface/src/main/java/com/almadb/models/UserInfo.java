@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.almadb.sftpjavainterface;
+package com.almadb.models;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,6 +11,7 @@ import java.util.Calendar;
 /**
  *
  * @author almadb
+ * Represents user of the system. At some point it will be used to trace operations performed by the user
  */
 public class UserInfo {
     private String username;

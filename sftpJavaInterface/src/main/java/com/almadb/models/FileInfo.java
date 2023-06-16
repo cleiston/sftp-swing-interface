@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.almadb.sftpjavainterface;
+package com.almadb.models;
 
 /**
  *
  * @author almadb
+ * Represents file properties to be displayed on the MainFrame window
  */
 public class FileInfo {
     private String name;

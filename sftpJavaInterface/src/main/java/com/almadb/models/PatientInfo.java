@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.almadb.sftpjavainterface;
+package com.almadb.models;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
  * @author almadb
+ * Represents Patient information to be inserted by the user of the system.
+ * This information will be used to generate a unique ID.
  */
 public class PatientInfo {
     private String fullName;

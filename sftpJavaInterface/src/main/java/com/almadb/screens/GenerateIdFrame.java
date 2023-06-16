@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.almadb.screens;
-import com.almadb.sftpjavainterface.PatientInfo;
+import com.almadb.models.PatientInfo;
 import javax.swing.JOptionPane;
 
 /**
